@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+{% if request.account.is_authnticated %}
+<p>Hello,{{request.account.username}}<a href="{% url 'register' %}">Logout</a></p>
+{% else %}
+{% endif %}
+<body>
+<h1>Homepage</h1>
+{% if request.user.is_authenticated %}
+<p>Hello,{{ request.user.username }} And your email is  a {{ request.user.email }}</p>
+{% else %}
+    Hello new user
+
+{% endif %}
+<p><a href="{% url 'login' %}">Login</a></p>
+<p><a href="{% url 'logout'%}">logout</a></p>
+<p><a href="{% url 'register'%}">Register</a></p>
+
+
+
+<form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Title</label><br>
+            <input type="text" name="title" />
+        </p>
+        <p>
+            <label>Text</label><br>
+            <input type="text" name="text" />
+        </p>
+         <p>
+
+        <input type="submit" value="Сохранить" >
+    </form>
+
+ <table>
+        <tr><th>ID</th><th>Title</th><th>Text</th><th>Time</th><th>      Done</th></tr>
+        {% for task in tasks  %}
+        <tr><td>{{ task.id }}</td><td>{{ task.title}}</td><td>{{task.text}}</td><td>{{task.timeallow}}</td><th>{{task.done}}</th><td><a href="edit/{{task.id}}">Edit</a> | <a href="delete/{{task.id}}">Delete</a></td><td><a href="eachtask/{{task.id}}">Show</a></td></tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
